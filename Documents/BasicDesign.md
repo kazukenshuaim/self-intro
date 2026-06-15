@@ -267,24 +267,55 @@ C:.
 
 ### 3.1. アカウント登録機能
 ```
-[ユーザー] アカウント情報を入力
+[ユーザー、templates/accounts/register.html] アカウント情報を入力、送信
         ↓
-[config/urls.py] 
+[config/urls.py] POST accounts/リクエスト
         ↓
-[Streamlit] POST /tasks にリクエスト送信
+[accounts/urls.py] register/リクエスト
         ↓
-[FastAPI] リクエストを受け取る
+[RegisterView(accounts/views.py)] 起動。CustomUserCreationFormでバリデーション
         ↓
-[FastAPI] IDと登録日時を生成し、ステータスを「未完了」に設定する
+[RegisterView(accounts/views.py)] model.pyのCustomUserへデータ保存
         ↓
-[FastAPI] tasks.json に追記保存
+[RegisterView(accounts/views.py)] login()で自動ログイン
         ↓
-[FastAPI] 保存した1件のデータを Streamlit に返す
+[RegisterView(accounts/views.py)] success_urlへ遷移
         ↓
-[Streamlit] 登録完了メッセージを表示する
+[templates/intros/intro_list.html] 表示 
 ```
 
 ### 3.2. ログイン、ログアウト機能
+#### ログイン機能
+```
+[ユーザー、templates/accounts/login.html] アカウント情報を入力、送信
+        ↓
+[config/urls.py] POST accounts/リクエスト
+        ↓
+[accounts/urls.py] login/リクエスト
+        ↓
+[auth_views.LoginView] 起動。model.pyのCustomUserのデータと照合
+        ↓
+[auth_views.LoginView] 照合成功後、ログイン状態確立
+        ↓
+[config/settings.py] LOGIN_REDIRECT_URLへ遷移
+        ↓
+[templates/intros/intro_list.html] 表示 
+```
+
+#### ログアウト機能
+```
+[ユーザー] ログアウトボタン押下
+        ↓
+[config/urls.py] POST accounts/リクエスト
+        ↓
+[accounts/urls.py] logout/リクエスト
+        ↓
+[auth_views.LogoutView(accounts/views.py)] 起動。ログイン状態破棄。
+        ↓
+[config/settings.py] LOGIN_REDIRECT_URLへ遷移
+        ↓
+[templates/accounts/login.html] 表示 
+```
 
 ### 3.3. 新規登録機能
 
