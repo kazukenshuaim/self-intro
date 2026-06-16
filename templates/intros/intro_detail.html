@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h3>{{ intro.name }}</h3>
+        {# 編集・削除ボタンは Day 7 で追加 #}
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">誕生日</dt>
+            <dd class="col-sm-9">{{ intro.birthday|date:"Y年m月d日"|default:'-' }}</dd>
+
+            <dt class="col-sm-3">趣味・特技</dt>
+            <dd class="col-sm-9">{{ intro.hobby|default:'-' }}</dd>
+
+            <dt class="col-sm-3">作成日時</dt>
+            <dd class="col-sm-9">{{ intro.created_at|date:"Y年m月d日 H:i"|default:'-' }}</dd>
+
+            <dt class="col-sm-3">更新日時</dt>
+            <dd class="col-sm-9">{{ intro.updated_at|date:"Y年m月d日 H:i"|default:'-' }}</dd>
+        </dl>
+    </div>
+</div>
+<a href="{% url 'intros:intro_list' %}" class="btn btn-link mt-2">← 一覧に戻る</a>
+{% endblock %}
