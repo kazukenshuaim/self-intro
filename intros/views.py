@@ -35,11 +35,9 @@ class IntroCreateView(LoginRequiredMixin, CreateView):
     
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        form.fields['name'].widget.attrs.update({'class': 'form-control', 'placeholder': '名前を入力してください。'})
-        form.fields['birthday'].widget.attrs.update({'type': 'date', 'class': 'form-control'})
-        form.fields['hobby'].widget.attrs.update({'rows': 4, 'class': 'form-control', 'placeholder': '趣味や特技などを自由に記入してください。'})
         return form
-    
+   
+
 class IntroUpdateView(LoginRequiredMixin, UpdateView):
     model = Intro
     form_class = IntroForm
@@ -53,11 +51,9 @@ class IntroUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        form.fields['name'].widget.attrs.update({'class': 'form-control', 'placeholder': '名前を入力してください。'})
-        form.fields['birthday'].widget.attrs.update({'type': 'date', 'class': 'form-control'})
-        form.fields['hobby'].widget.attrs.update({'rows': 4, 'class': 'form-control', 'placeholder': '趣味や特技などを自由に記入してください。'})
         return form
-    
+
+
 class IntroDeleteView(LoginRequiredMixin, DeleteView):
     model = Intro
     template_name = 'intros/intro_confirm_delete.html'
