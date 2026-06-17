@@ -3,7 +3,7 @@
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h2>自己紹介一覧</h2>
-    {# + 新規自己紹介 ボタンは Day 7 で追加 #}
+    <a href="{% url 'intros:intro_create' %}" class="btn btn-primary">+ 新規自己紹介</a>
 </div>
 
 {% if intros %}
@@ -11,6 +11,7 @@
     <thead>
         <tr>
             <th>名前</th>
+            <th>作成日時</th>
             <th>更新日時</th>
         </tr>
     </thead>
@@ -20,7 +21,8 @@
             <td>
                 <a href="{% url 'intros:intro_detail' intro.pk %}">{{ intro.name }}</a>
             </td>
-            <td>{{ intro.created_at|date:"Y年m月d日"|default:'-' }}</td>
+            <td>{{ intro.created_at|date:"Y年m月d日 H:i"|default:'-' }}</td>
+            <td>{{ intro.updated_at|date:"Y年m月d日 H:i"|default:'-' }}</td>
         </tr>
         {% endfor %}
     </tbody>

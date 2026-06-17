@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card border-danger">
+    <div class="card-header bg-danger text-white">
+        <h3>自己紹介の削除</h3>
+    </div>
+    <div class="card-body">
+        <p>本当に{{ object.name }}の自己紹介を削除してもよろしいですか？一度消去すると取り消せません。</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">削除</button>
+            <a href="{% url 'intros:intro_detail' object.pk %}" class="btn btn-secondary">キャンセル</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
