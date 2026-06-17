@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{% if object %}自己紹介を編集{% else %}新規自己紹介{% endif %}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">保存</button>
+    {% if object %}
+        <a href="{% url 'intros:intro_detail' object.pk %}" class="btn btn-secondary">キャンセル</a>
+    {% else %}
+        <a href="{% url 'intros:intro_list' %}" class="btn btn-secondary">キャンセル</a>
+    {% endif %}
+</form>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header d-flex justify-content-between">
+        <h3>{{ intro.name }}</h3>
+        <div>
+            <a href="{% url 'intros:intro_update' intro.pk %}" class="btn btn-sm btn-outline-secondary">編集</a>
+            <a href="{% url 'intros:intro_delete' intro.pk %}" class="btn btn-sm btn-outline-danger">削除</a>
+        </div>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">誕生日</dt>
+            <dd class="col-sm-9">{{ intro.birthday|date:"Y年m月d日"|default:'-' }}</dd>
+
+            <dt class="col-sm-3">趣味・特技</dt>
+            <dd class="col-sm-9">{{ intro.hobby|default:'-' }}</dd>
+
+            <dt class="col-sm-3">作成日時</dt>
+            <dd class="col-sm-9">{{ intro.created_at|date:"Y年m月d日 H:i"|default:'-' }}</dd>
+
+            <dt class="col-sm-3">更新日時</dt>
+            <dd class="col-sm-9">{{ intro.updated_at|date:"Y年m月d日 H:i"|default:'-' }}</dd>
+        </dl>
+    </div>
+</div>
+<a href="{% url 'intros:intro_list' %}" class="btn btn-link mt-2">← 一覧に戻る</a>
+{% endblock %}
