@@ -324,7 +324,11 @@ C:.
         ↓
 [accounts/urls.py] login/検知
         ↓
-[auth_views.LoginView] 起動。model.pyのCustomUserのデータと照合。照合成功後、ログイン状態確立
+[auth_views.LoginView] 起動。model.pyのCustomUserのデータと照合。
+        |
+        | 失敗時、エラーメッセージを出す
+        ↓
+[auth_views.LoginView] 照合成立後、ログイン状態確立
         ↓
 [config/settings.py] LOGIN_REDIRECT_URLへ遷移
         ↓
@@ -374,12 +378,12 @@ C:.
         ↓
 [IntroCreateView(intros/views.py)] success_urlへ遷移
         ↓
-[templates/intros/intro_list.html] 表示 
+[templates/intros/intro_list.html] 表示。サクセスメッセージ表示。
 ```
 
 ### 3.4. 一覧表示機能
 ```
-[ブラウザ] GET /intros/create/リクエスト
+[ブラウザ] GET /intros/、/intros/?page=2などリクエスト
         ↓
 [config/urls.py] intros/検知
         ↓
@@ -387,13 +391,11 @@ C:.
         ↓
 [IntroListView(intros/views.py)] 起動。LoginRequiredMixinによるログインチェック
         ↓
-[IntroListView(intros/views.py)] get_queryset()が起動。Intro.object.filterでDBから自分のデータを取得。
+[IntroListView(intros/views.py)] get_queryset()が起動。pagenate_by=10、page指定（例えばpage=2）を検知。Intro.object.filterでDBから自分のデータを10件、更新順に取得。
         ↓
-[models.py] ordering = ['-updated_at']で更新順にソート
+[IntroListView(intros/views.py)]取得データを'intros'に格納。
         ↓
-[IntroListView(intros/views.py)]取得データを'tasks'に格納。
-        ↓
-[templates/intros/intro_list.html] {% for intro in intros %}でループして自己紹介を表示
+[templates/intros/intro_list.html] {% for intro in intros %}で、1-10件をループして自己紹介を表示。page_objに従ってページ遷移ボタンを表示。
 ```
 
 ### 3.5. 詳細表示機能
@@ -422,9 +424,9 @@ C:.
         ↓
 [templates/intros/intro_form.html] if objectはTrueで表示
         ↓
-[ユーザー]名前などの情報を入力、送信
+[ユーザー] 名前などの情報を入力、送信
         ↓
-[ブラウザ] POST /intros/{id}/update/リクエスト
+[ブラウザ] POST /intros/{id}/update/リクエスト          
         ↓
 [config/urls.py] intros/検知
         ↓
@@ -436,7 +438,7 @@ C:.
         ↓
 [IntroUpdateView(intros/views.py)] バリデーション成功時、変更内容を上書き保存。updated_atが自動更新。form_valid()で変更内容確定。get_success_urlが起動。
         ↓
-[templates/intros/intro_list.html] 表示
+[templates/intros/intro_list.html] 表示。サクセスメッセージ表示。
 ```
 
 #### 自己紹介削除機能
@@ -450,10 +452,10 @@ C:.
 [TaskDeleteView(intros/views.py)] get_queryset()起動、対象自己紹介を確認。
         ↓
 [templates/intros/intro_confirm_delete.html] 表示
-        ↓                       └───────────────────────────────────────────────↓ 
-[ユーザー]削除ボタンを押す                                       [ユーザー]キャンセルボタンを押す
-        ↓                                                                       ↓
-[ブラウザ] POST /intros/{id}/delete/リクエスト                  []
+        ↓
+[ユーザー]削除ボタンを押す
+        ↓
+[ブラウザ] POST /intros/{id}/delete/リクエスト
         ↓
 [config/urls.py] intros/検知
         ↓
@@ -461,7 +463,7 @@ C:.
         ↓
 [IntroDeleteView(intros/views.py)] 対象のデータを削除。success_urlに遷移。
         ↓
-[templates/intros/intro_list.html] 表示
+[templates/intros/intro_list.html] 表示。サクセスメッセージ表示。
 ```
 
 ---
@@ -472,6 +474,11 @@ SQLを使用。
 ---
 
 ## 5. エラー処理方針
+| エラーの種類 | 発生箇所 | 対処法 |
+|---|---|---|
+| ユーザー名、メールアドレス、パスワード二か所のどれかが空、メールアドレスに@が入っていない | アカウント登録画面 | エラーメッセージを表示、送信しない |
+| ログイン不正 | ログイン画面 | エラーメッセージを表示し、ログインしない |
+| 名前が空 | 新規登録画面、編集画面 | エラーメッセージを表示し、登録しない |
 
 ---
 

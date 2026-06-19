@@ -98,14 +98,19 @@
 
 | メソッド | パス | 機能概要 | 処理内容 / 備考 |
 | --- | --- | --- | --- |
-| **POST** | `/accounts/register` | アカウントの登録 |
-| **POST** | `/accounts/login` | ログイン |
-| **POST** | `/accounts/logout` | ログアウト |
-| **POST** | `/tasks/create` | 自己紹介の登録 |
-| **GET** | `/tasks` | 自己紹介一覧の取得 |
-| **GET** | `/tasks/{id}` | 指定IDの自己紹介詳細の取得 |
-| **POST** | `/tasks/{id}/update` | 指定IDの自己紹介の編集 |
-| **DELETE** | `/tasks/{id}/delete` | 指定IDの自己紹介の削除 |
+| **GET** | `/accounts/register/` | アカウント登録画面の取得
+| **POST** | `/accounts/register/` | アカウントの登録 |
+| **GET** | `/accounts/login/` | ログイン画面の取得 |
+| **POST** | `/accounts/login/` | ログイン |
+| **POST** | `/accounts/logout/` | ログアウト |
+| **GET** | `/intros/create/` | 新規登録画面の取得 |
+| **POST** | `/intros/create/` | 自己紹介の登録 |
+| **GET** | `/intros/` | 自己紹介一覧の取得 |
+| **GET** | `/intros/{id}/` | 指定IDの自己紹介詳細の取得 |
+| **GET** | `/intros/{id}/update/` | 編集画面の取得 |
+| **POST** | `/intros/{id}/update/` | 指定IDの自己紹介の編集 |
+| **GET** | `/intros/{id}/delete/` | 削除確認画面の取得 |
+| **DELETE** | `/intros/{id}/delete/` | 指定IDの自己紹介の削除 |
 
 ---
 
@@ -117,3 +122,5 @@
 ## 7. スコープ外
 - 検索機能
 - 複数のアカウントで同時ログイン
+
+---
