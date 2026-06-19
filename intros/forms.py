@@ -16,7 +16,7 @@ class IntroForm(forms.ModelForm):
                 'class': 'form-control'
             }),
             'hobby': forms.Textarea(attrs={
-                'rows': 4,
+                'rows': 10,
                 'class': 'form-control',
                 'placeholder': '趣味や特技などを自由に記入してください。'
             }),
